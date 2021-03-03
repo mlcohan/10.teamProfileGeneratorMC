@@ -69,8 +69,6 @@ const makeManager = () =>
 
 
 
-    
-
 const addEngineer = () => {
         inquirer.prompt([
             {
@@ -144,8 +142,6 @@ const addIntern = () => {
             addMember() //calling function
         })
     }
-
-
 
 
 // const generateHTML = (answers) =>
