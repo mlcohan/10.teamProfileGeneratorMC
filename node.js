@@ -5,6 +5,7 @@ const Intern = require('./constructors/intern')
 const Manager = require('./constructors/manager')
 const team = []
 const makeHtml = require('./constructors/html')
+const path = require('path')
 const buildDir = path.resolve(__dirname, "index.html")
 
 const makeManager = () => 
@@ -16,7 +17,7 @@ const makeManager = () =>
         },
         {
             type: 'input',
-            name: 'ID',
+            name: 'id',
             message: "What is the team manager's employee ID?",
         },
         {
@@ -34,7 +35,7 @@ const makeManager = () =>
         const manager = new Manager(
 
             answers.name,
-            parseInt(answers.ID),
+            parseInt(answers.id),
             answers.email,
             parseInt(answers.office)
         )
@@ -73,22 +74,22 @@ const addEngineer = () => {
         inquirer.prompt([
             {
                 type: 'input',
-                name: 'engineerName',
+                name: 'name',
                 message: "What is this engineer's name",
             },
             {
                 type: 'input',
-                name: 'engineerID',
+                name: 'id',
                 message: "What is this engineer's employee ID?",
             },
             {
                 type: 'input',
-                name: 'engineerEmail',
+                name: 'email',
                 message: "What is this engineer's email address?",
             },
             {
                 type: 'input',
-                name: 'engineerGitHub',
+                name: 'gitHub',
                 message: "What is this engineer's GitHub username?",
             },
         ])
@@ -96,9 +97,9 @@ const addEngineer = () => {
             const engineer = new Engineer(
     
                 answers.name,
-                parseInt(answers.ID),
+                parseInt(answers.id),
                 answers.email,
-                parseInt(answers.office)
+                answers.gitHub
             )
             team.push(engineer)
     
@@ -110,32 +111,32 @@ const addIntern = () => {
         inquirer.prompt([
             {
                 type: 'input',
-                name: 'internName',
+                name: 'name',
                 message: "What is this intern's name",
             },
             {
                 type: 'input',
-                name: 'internID',
+                name: 'id',
                 message: "What is this intern's employee ID?",
             },
             {
                 type: 'input',
-                name: 'internEmail',
+                name: 'email',
                 message: "What is this intern's email address?",
             },
             {
                 type: 'input',
-                name: 'internGitHub',
-                message: "What is this intern's GitHubt username?",
+                name: 'school',
+                message: "What is this intern's current school?",
             },
         ])
         .then(function(answers){
             const intern = new Intern(
     
                 answers.name,
-                parseInt(answers.ID),
+                parseInt(answers.id),
                 answers.email,
-                answers.github
+                answers.school
             )
             team.push(intern)
     
@@ -144,40 +145,47 @@ const addIntern = () => {
     }
 
 
-// const generateHTML = (answers) =>
-//   `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-//   <title>Document</title>
-// </head>
-// <body>
-//   <div class="jumbotron jumbotron-fluid">
-//   <div class="container">
-//     <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-//     <p class="lead">I am from ${answers.email}.</p>
+function generateHTML(){
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Team Profile</title>
+</head>
+<body>
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+  <div class="row">
 
-//     </ul>
-//   </div>
-// </div>
-// </body>
-// </html>`;
+</div>
+  </div>
+</div>
+</body>
+</html>`;
+fs.writeFile("./index.html", html, function(err){
+    if (err) {
+        console.log(err)
+    }
+})
+}
 
+// const init = () => {
+//     makeManager().then((answers) => {
+//       try {
+//         const html = generateHTML(answers);
+//         fs.writeFileSync('index.html', html);
+//         console.log('file write success.');
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     });
+//   };
 
 const init = () => {
-    makeManager().then((answers) => {
-      try {
-        const html = makeHtml(answers);
-        fs.writeFileSync('index.html', html);
-        console.log('file write success.');
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  };
-
-
+  generateHTML();
+  makeManager
+}
   
   init();

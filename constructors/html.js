@@ -1,6 +1,6 @@
 //require fs etc
 
-function makeHtml(){
+async function makeHtml(){
     const [
         managerTemplate,
         internTemplate,
