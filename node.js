@@ -91,7 +91,7 @@ const addEngineer = () => {
             },
             {
                 type: 'input',
-                name: 'github',
+                name: 'gitHub',
                 message: "What is this engineer's GitHub username?",
             },
         ])
