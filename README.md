@@ -14,7 +14,7 @@
    * [Questions](#questions)
     
   ## Installation
-  npm install
+  npm install <br>
   node node.js
 
   ## Usage 
@@ -28,6 +28,11 @@
    npm run test
 
   ## WalkThrough
+  https://drive.google.com/file/d/1mKg5jFkRCZatTMZDIljMzHrs71pBQRIP/view
+
+  ![teamGeneratorWalkthrough2](https://user-images.githubusercontent.com/38632935/110074295-d2e69e80-7d35-11eb-816a-c514d3e490a2.gif)
+
+
 
   ## Questions?
    
