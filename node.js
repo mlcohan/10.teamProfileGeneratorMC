@@ -1,12 +1,28 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const util = require('util')
+
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
+
 const Engineer = require('./constructors/engineer')
 const Intern = require('./constructors/intern')
 const Manager = require('./constructors/manager')
+
+// const generateHTML = require('./templates/main.html')
 const team = []
-const makeHtml = require('./constructors/html')
-const path = require('path')
-const buildDir = path.resolve(__dirname, "index.html")
+// const templatesDir = path.resolve(__dirname, './templates')
+
+// const managerArray = []
+// const engineerArray = []
+// const internArray = []
+// const team = {managerArray, engineerArray, internArray}
+
+// const makeHtml = require('./templates')
+
+// const generateHTML = require('./constructors/html')
+// const path = require('path')
+// const buildPath = path.resolve(__dirname, 'new.html')
 
 const makeManager = () => 
     inquirer.prompt([
@@ -40,8 +56,9 @@ const makeManager = () =>
             parseInt(answers.office)
         )
         team.push(manager)
-
+        // addHTML(manager)
         addMember() //calling function
+
     })
 
     //addMemeber function 
@@ -63,7 +80,7 @@ const makeManager = () =>
                 addIntern();
             }
             else {
-                makeHtml(team);
+                createPage(team);
             }
             })
     }
@@ -89,7 +106,7 @@ const addEngineer = () => {
             },
             {
                 type: 'input',
-                name: 'gitHub',
+                name: 'github',
                 message: "What is this engineer's GitHub username?",
             },
         ])
@@ -102,7 +119,7 @@ const addEngineer = () => {
                 answers.gitHub
             )
             team.push(engineer)
-    
+            // addHTML(engineer)
             addMember() //calling function
         })
     }
@@ -139,38 +156,118 @@ const addIntern = () => {
                 answers.school
             )
             team.push(intern)
-    
+            // addHTML(intern)
             addMember() //calling function
         })
     }
 
+function createPage() {
+        let employeeCards = "";
+    
+        team.forEach(employee => {
+            let employeeCard = employee.newEmployeeCard();
+            employeeCards += employeeCard;
+        });
+    
+        let newHTML = `
+        <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- bootstrap link -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <title>Team</title>
+    </head>
+    <body>
+        <div class="container-fluid bg-warning text-center d-flex align-items-center justify-content-center" style="height: 10rem;">
+            <div>
+                <h1 style="color: white;">My Team</h1>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 5rem;">
+            <div class="card-columns justify-content-center">
+                ${employeeCards}
+            </div>
+        </div>
+    </body>
+    </html>`;
+        fs.writeFile("./new.html", newHTML, (err)=> {
+            if (err) {
+                throw err;
+            }
+        });
+    };
+// function generateHTML(Manager, Engineer, Intern){
+//   const html = `<!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+//   <title>Team Profile</title>
+// </head>
+// <body>
+//   <div class="jumbotron jumbotron-fluid">
+  
+//   <div class="container">
+//   <div class="row">
+// ${Manager.getName()}
+// ${Engineer.getName()}
+// ${Intern.getName()}
+// </div>
+//   </div>
+// </div>
+// </body>
+// </html>`;
+// fs.writeFile("./new.html", html, function(err){
+//     if (err) {
+//         console.log(err)
+//     }
+// })
+// writeFile('new.html', html)
+// }
 
-function generateHTML(){
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Team Profile</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-  <div class="row">
 
-</div>
-  </div>
-</div>
-</body>
-</html>`;
-fs.writeFile("./index.html", html, function(err){
-    if (err) {
-        console.log(err)
-    }
-})
-}
 
+// async function makeHtml(){
+   
+    // const html = []
+    // const [
+    //     managerTemplate,
+    //     internTemplate,
+    //     engineerTemplate,
+    //     mainTemplate
+    //   ] = await Promise.all([
+    //     readFile(path.resolve(templatesDir, "manager.html"), "utf8"),
+    //     readFile(path.resolve(templatesDir, "Intern.html"), "utf8"),
+    //     readFile(path.resolve(templatesDir, "engineer.html"), "utf8"),
+    //     readFile(path.resolve(templatesDir, "main.html"), "utf8")
+    //   ]);
+
+     
+    //   html.push(managerTemplate)
+    //   html.push(internTemplate)
+    //   html.push(engineerTemplate)
+    //   html.push(mainTemplate)
+
+    //   fs.writeFileSync('new.html', html)
+    //   generateHTML()
+// } 
+
+
+//html.push for each 
+
+// function addHTML(){
+//     return new Promise(function(resolve, reject){
+//         const name = member.getName();
+//         const role = member.getRole();
+//         const id = member.getID();
+//         const email = member.getEmail();
+//     })
+// }
 // const init = () => {
 //     makeManager().then((answers) => {
 //       try {
@@ -183,9 +280,8 @@ fs.writeFile("./index.html", html, function(err){
 //     });
 //   };
 
-const init = () => {
-  generateHTML();
-  makeManager
-}
+// const init = () => {
+  makeManager()
+// }
   
-  init();
+//   init();
