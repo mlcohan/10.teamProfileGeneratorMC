@@ -1,43 +1,21 @@
-const makeManager = require("./node.js");
+  
+const manager = require("../constructors/manager");
 
-describe("makemanager", () => {
-  describe("name", () => {
-    it("should reverse a given string", () => {
-      const str = "Hello World!";
-      const reversed = "!dlroW olleH";
-
-      const result = new Algo().reverse(str);
-
-      expect(result).toEqual(reversed);
-    });
-  });
-
-  describe("isPalindrome", () => {
-    it("should return true if a string is a palindrome", () => {
-      const str = "racecar";
-
-      const result = new Algo().isPalindrome(str);
-
-      expect(result).toEqual(true);
+describe("Manager", () =>{
+    it("should set the name, id, and email and office number of the manager", () => {
+        const test = new manager("Mary", 2, "mary.cohan@gmail.com", 320);
+        expect(test.name).toEqual("Mary");
+        expect(test.id).toEqual(2);
+        expect(test.email).toEqual("mary.cohan@gmail.com");
+        expect(test.office).toEqual(320)
     });
 
-    it("should return false if a string is not a palindrome", () => {
-      const str = "neon";
-
-      const result = new Algo().isPalindrome(str);
-
-      expect(result).toEqual(false);
+    describe("getRole", () => {
+        it("should return Manager", ()=>{
+            const role = "Manager";
+            const test = new manager("Mary", 2, "mary.cohan@gmail.com", 320)
+            expect(test.getRole()).toBe(role);
+        });
     });
-  });
-
-  describe("capitalize", () => {
-    it("should take a string and return a new string with the first letter of each word capitalized", () => {
-      const str = "capitalize every first word of the string.";
-      const capitalized = "Capitalize Every First Word Of The String.";
-
-      const result = new Algo().capitalize(str);
-
-      expect(result).toEqual(capitalized);
-    });
-  });
+   
 });

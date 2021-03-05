@@ -1,43 +1,12 @@
-const Algo = require("../algo");
+  
+const Employee = require("../constructors/employee");
 
-describe("Algo", () => {
-  describe("reverse", () => {
-    it("should reverse a given string", () => {
-      const str = "Hello World!";
-      const reversed = "!dlroW olleH";
-
-      const result = new Algo().reverse(str);
-
-      expect(result).toEqual(reversed);
-    });
-  });
-
-  describe("isPalindrome", () => {
-    it("should return true if a string is a palindrome", () => {
-      const str = "racecar";
-
-      const result = new Algo().isPalindrome(str);
-
-      expect(result).toEqual(true);
+describe("Employee", () =>{
+    it("should set the name, id, and email of the employee", () => {
+        const test = new Employee("Mary", 2, "mary.cohan@gmail.com");
+        expect(test.name).toEqual("Mary");
+        expect(test.id).toEqual(2);
+        expect(test.email).toEqual("mary.cohan@gmail.com");
     });
 
-    it("should return false if a string is not a palindrome", () => {
-      const str = "neon";
-
-      const result = new Algo().isPalindrome(str);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe("capitalize", () => {
-    it("should take a string and return a new string with the first letter of each word capitalized", () => {
-      const str = "capitalize every first word of the string.";
-      const capitalized = "Capitalize Every First Word Of The String.";
-
-      const result = new Algo().capitalize(str);
-
-      expect(result).toEqual(capitalized);
-    });
-  });
 });

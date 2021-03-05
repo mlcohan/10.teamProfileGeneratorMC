@@ -1,14 +1,17 @@
 {
-  "name": "static-site",
+  "name": "static",
   "version": "1.0.0",
   "description": "",
   "main": "node.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "watch": "nodemon index",
+    "test": "jest"
   },
-  "author": "",
+  "author": "Mary Cohan",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^6.5.2"
+    "inquirer": "^6.5.2",
+    "jest": "^24.9.0"
   }
 }
